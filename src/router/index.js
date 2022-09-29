@@ -10,7 +10,11 @@ const routes = [
     name: 'login',
     component: login
   },
-
+  {
+    path: '/home',
+    name: 'home',
+    component: () => import('../home')
+  }
 ]
 
 const router = new VueRouter({
