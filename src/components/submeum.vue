@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <fragment>
     <el-menu-item
       :index="item.path"
       v-if="!item.children || item.children.length === 0"
@@ -18,7 +18,7 @@
       <submeum v-for="ele in item.children" :key="ele.id" :item="ele">
       </submeum>
     </el-submenu>
-  </div>
+  </fragment>
 </template>
 
 <script>

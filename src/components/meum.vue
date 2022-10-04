@@ -2,10 +2,13 @@
   <div>
     <el-menu
       :default-active="getRouter"
-      class="el-menu-vertical-demo"
+      class="el-menu-vertical-demo menu"
       background-color="#ffffff"
       text-color="#000"
       router
+      unique-opened
+      :collapse="status"
+      collapse-transition
     >
       <submeum
         v-for="(item, index) in menuList"
@@ -17,9 +20,10 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import submeum from './submeum.vue'
 export default {
-  name:'meum',
+  name: 'meum',
   components: {
     submeum
   },
@@ -28,12 +32,18 @@ export default {
       type: Array,
       defailt: () => []
     }
-  },computed:{
-    getRouter(){
-       return this.$route.path
+  },
+  computed: {
+    ...mapGetters('meum', ['status']),
+    getRouter() {
+      return this.$route.path
     }
   }
 }
 </script>
 
-<style></style>
+<style>
+.menu {
+  border: none;
+}
+</style>

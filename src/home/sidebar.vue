@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-aside width="200px">
+    <el-aside :width="status?'70px':'200px'">
       <meum :menuList="menuList"></meum>
     </el-aside>
   </div>
@@ -8,6 +8,7 @@
 <script>
 import http from '../api/sidebar'
 import meum from '../components/meum.vue'
+import {mapGetters} from 'vuex'
 export default {
   components: {
     meum
@@ -24,6 +25,7 @@ export default {
       try {
         const response = await http.Sidebarrendering()
         this.menuList = response.data.data.menuList
+        console.log(this.menuList)
       } catch (e) {
         console.log(e)
       }
@@ -31,6 +33,9 @@ export default {
   },
   created() {
     this.Sidebarrendering()
+  },
+  computed:{
+    ...mapGetters('meum',['status'])
   }
 }
 </script>
@@ -40,5 +45,6 @@ export default {
   border-right: 1px solid #ccc;
   color: #000;
   height: 91vh;
+  transition: all 0.5s; 
 }
 </style>
