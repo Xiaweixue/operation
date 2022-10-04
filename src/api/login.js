@@ -16,7 +16,16 @@ const verification = () => {
     })
 }
 
+const logout=()=>{
+    return request({
+        url:'/api/sysUser/loginOut',
+        method:'POST'
+    })
+}
+
+
 export default {
     getLogin,
-    verification
+    verification,
+    logout
 }

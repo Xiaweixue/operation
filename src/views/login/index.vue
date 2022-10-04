@@ -34,7 +34,8 @@
             @keyup.enter.native="submit"
             style="float: left; width: 240px"
             placeholder="请填写验证码"
-          ></el-input>
+          >
+          </el-input>
           <div style="width: 110px; float: right; height: 40px">
             <img :src="this.img" alt="" @click="acquireVerification" />
           </div>
@@ -69,7 +70,7 @@ export default {
         ],
         password: [
           { required: true, message: '请输入密码', trigger: 'blur' },
-          { min: 6, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur' }
+          { min: 4, max: 16, message: '长度在 4 到 16 个字符', trigger: 'blur' }
         ]
       }
     }
@@ -88,6 +89,7 @@ export default {
     async SelChrGate() {
       try {
         const response = await http.getLogin(this.ruleForm)
+        console.log(response)
         if (response.data.code === 200) {
           sessionStorage.setItem('token', response.data.token)
           this.$router.push('/home')
@@ -108,6 +110,7 @@ export default {
     async acquireVerification() {
       try {
         const response = await http.verification()
+        console.log(response)
         this.img = window.URL.createObjectURL(response.data)
       } catch (e) {
         console.log(e.msg)

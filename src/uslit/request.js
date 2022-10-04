@@ -1,15 +1,14 @@
 import axios from 'axios'
-import { Message } from 'element-ui'
+// import { Message } from 'element-ui'
 const instance = axios.create({
-  baseURL: 'http://119.45.133.128:8089/api',
+  baseURL: 'http://119.45.133.128:8098/api',
   timeout: 5000
 })
 
-axios.interceptors.request.use(
-  function (config) {
-    const token = sessionStorage.getItem('token')
+instance.interceptors.request.use(function (config) {
+    let token = sessionStorage.getItem('token')
     // 当token存在的时候，则将token通过请求头发送给后台
-    if (token) config.headers.authorization = 'Bearer ' + token
+    if (token) config.headers.token = token
     return config
   },
   function (error) {
@@ -17,10 +16,10 @@ axios.interceptors.request.use(
   }
 )
 
-axios.interceptors.response.use(
+instance.interceptors.response.use(
   function (response) {
     if (response.status >= 200 && response.status <= 400) {
-      return response.data.data
+      return response
     }
     if (response.status === 401) {
       return
@@ -39,6 +38,7 @@ const _showError = (errorCode, msg) => {
   Message.error(title)
 }
 const services = (options) => {
+  // console.log(instance);
   options.method = options.method || 'get'
   if (options.method.toLowerCase() === 'get') {
     options.params = options.data || options.params
