@@ -3,7 +3,10 @@ import VueRouter from 'vue-router'
 import login from '../views/login'
 
 Vue.use(VueRouter)
-
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch((err) => err)
+}
 const routes = [
   {
     path: '/',
@@ -11,11 +14,19 @@ const routes = [
     component: login
   },
   {
-    path: '/home',
-    name: 'home',
-    redirect:'/test3',
-    component: () => import('../home'),
+    path: '/Layout',
+    name: 'Layout',
+    redirect: '/home',
+    component: () => import('../Layout'),
     children: [
+      {
+        path: '/home',
+        name: 'home',
+        meta: {
+          title: '首页'
+        },
+        component: () => import('../views/Home')
+      },
       {
         path: '/test3',
         name: 'test3',
@@ -24,16 +35,25 @@ const routes = [
       {
         path: '/department',
         name: 'department',
+        meta: {
+          title: '机构管理'
+        },
         component: () => import('../views/department')
       },
       {
         path: '/userList',
         name: 'userList',
+        meta: {
+          title: '用户管理'
+        },
         component: () => import('../views/userList')
       },
       {
         path: '/roleList',
         name: 'roleList',
+        meta: {
+          title: '角色管理'
+        },
         component: () => import('../views/roleList')
       },
       {
@@ -44,6 +64,9 @@ const routes = [
       {
         path: '/goodCategory',
         name: 'goodCategory',
+        meta: {
+          title: '分类管理'
+        },
         component: () => import('../views/goodCategory')
       },
       {
@@ -59,15 +82,25 @@ const routes = [
       {
         path: '/document',
         name: 'document',
+        meta: {
+          title: '接口文档'
+        },
         component: () => import('../views/document')
       },
       {
         path: '/systemCode',
         name: 'systemCode',
+        meta: {
+          title: '日志管理'
+        },
         component: () => import('../views/systemCode')
-      }, {
+      },
+      {
         path: '/menuList',
         name: 'menuList',
+        meta: {
+          title: '权限管理'
+        },
         component: () => import('../views/menuList')
       }
     ]

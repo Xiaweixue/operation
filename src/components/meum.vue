@@ -46,4 +46,7 @@ export default {
 .menu {
   border: none;
 }
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+    width: 200px;
+}
 </style>
